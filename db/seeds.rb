@@ -1,10 +1,13 @@
-def add_home_coordinates
-  Location.create(name: "home", coordinates_decimal_degrees: "37.730679,-122.440597")
+def add_home_coordinates(home_coords)
+  Location.create(name: "home", coordinates_decimal_degrees: home_coords["coordinates_decimal_degrees"])
 end
 
-def add_work_coordinates
-  Location.create(name: "work", coordinates_decimal_degrees: "37.561807,-122.324830")
+def add_work_coordinates(work_coords)
+  Location.create(name: "work", coordinates_decimal_degrees: work_coords["coordinates_decimal_degrees"])
 end
 
-add_home_coordinates
-add_work_coordinates
+
+path = File.join(File.dirname(__FILE__), "/seeds/locations.json")
+records = JSON.parse(File.read(path))
+add_home_coordinates(records["home"])
+add_work_coordinates(records["work"])
